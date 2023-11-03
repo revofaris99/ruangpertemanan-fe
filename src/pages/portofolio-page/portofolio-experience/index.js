@@ -1,5 +1,5 @@
 import React from "react";
-import {images} from '../../../constants'
+import { images } from "../../../constants";
 const PortofolioExperience = () => {
   return (
     <div
@@ -39,6 +39,7 @@ const PortofolioExperience = () => {
               </div>
             </div>
           </div>
+
           <div
             style={{ backgroundImage: `url(${images.RecipeWeb})` }}
             className="shadow-lg shadow-[#040c16] group container rounded-md justifiy-center items-center mx-auto content-div "
@@ -62,6 +63,7 @@ const PortofolioExperience = () => {
               </div>
             </div>
           </div>
+
           <div
             style={{ backgroundImage: `url(${images.AnkasaWeb})` }}
             className="shadow-lg shadow-[#040c16] group container rounded-md justifiy-center items-center mx-auto content-div "
@@ -85,6 +87,7 @@ const PortofolioExperience = () => {
               </div>
             </div>
           </div>
+
           <div
             style={{ backgroundImage: `url(${images.RecipeMobile})` }}
             className="shadow-lg shadow-[#040c16] group container rounded-md justifiy-center items-center mx-auto content-div "
@@ -92,7 +95,7 @@ const PortofolioExperience = () => {
             {/* hover effect */}
             <div className="opacity-0 group-hover:opacity-100 text-center">
               <span className="text-2xl font-bold text-white tracking-wider">
-              Recipe Mobile Application
+                Recipe Mobile Application
               </span>
               <div className="pt-8 text-center">
                 <a href="https://drive.google.com/file/d/1IyEJNDOPtGHM5mr9GnwOJkIaUwa6BBTd/view?usp=sharing">
@@ -101,6 +104,30 @@ const PortofolioExperience = () => {
                   </button>
                 </a>
                 <a href="https://github.com/revofarissaifuddin/RecipeMobileApp">
+                  <button className="text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg">
+                    Code
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{ backgroundImage: `url(${images.HireWeb})` }}
+            className="shadow-lg shadow-[#040c16] group container rounded-md justifiy-center items-center mx-auto content-div "
+          >
+            {/* hover effect */}
+            <div className="opacity-0 group-hover:opacity-100 text-center">
+              <span className="text-2xl font-bold text-white tracking-wider">
+                Hire Web Application
+              </span>
+              <div className="pt-8 text-center">
+                <a href="https://hireapp.vercel.app/home">
+                  <button className="text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg">
+                    Demo
+                  </button>
+                </a>
+                <a href="https://github.com/yosuanovry/HireApp-FE">
                   <button className="text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg">
                     Code
                   </button>
