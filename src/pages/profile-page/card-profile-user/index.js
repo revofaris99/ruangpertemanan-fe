@@ -95,6 +95,13 @@ const CardProfileUser = () => {
               <icons.FaArrowRight size={20} className="" />
             </div>
           </Link>
+          <Link to={"/ruang/v1/portofolio-next"}>
+            <div className="grid grid-cols-3 place-items-center mt-4 hover:text-blue-600">
+              <icons.FaRegAddressCard size={20} className="" />
+              <h1 className="">Portofolio</h1>
+              <icons.FaArrowRight size={20} className="" />
+            </div>
+          </Link>
           <Link to={"/ruang/v1/profile-user/puisi"}>
             <div className="grid grid-cols-3 place-items-center mt-6 hover:text-blue-600">
               <icons.TfiWrite size={20} />

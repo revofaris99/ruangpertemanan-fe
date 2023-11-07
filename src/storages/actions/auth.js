@@ -14,7 +14,7 @@ export const loginUser = (data, navigate) => async (dispatch) => {
     localStorage.setItem("photo", result.photo);
     dispatch({ type: "AUTH_LOGIN_SUCCESS", payload: result });
     toast.success("Login Successfuly!");
-    navigate("/ruang/v1/profile-user");
+    navigate("/ruang/v1/home");
   } catch (error) {
     dispatch({ type: "AUTH_LOGIN_FAILED" });
     toast.error("Login Failed!");

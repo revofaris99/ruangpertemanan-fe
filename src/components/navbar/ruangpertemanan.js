@@ -14,7 +14,7 @@ const NavRuangPertemanan = () => {
     navigate("/ruang/v1/home");
     window.location.reload(false);
   };
-
+  
   return (
     <div className="">
       <nav className="NavbarItems">
@@ -55,7 +55,7 @@ const NavRuangPertemanan = () => {
           {token ? (
             <>
               <li>
-                <div className="nav-links dropdown">
+                <div className="nav-links dropdown w-40">
                   <div className="flex justify-start">
                     {/* <icons.PiImageSquareFill /> */}
                     {nama?nama:"Users"}

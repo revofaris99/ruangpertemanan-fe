@@ -29,7 +29,7 @@ import { FiSearch } from "react-icons/fi";
 import { ImExit } from "react-icons/im";
 import { TfiWrite } from "react-icons/tfi";
 import { PiImageSquareFill } from "react-icons/pi";
-
+import { FaRegAddressCard } from "react-icons/fa";
 const Icons = {
   FaBars,
   FaTimes,
@@ -59,6 +59,7 @@ const Icons = {
   AiFillDelete,
   PiImageSquareFill,
   AiOutlineFileAdd,
+  FaRegAddressCard,
 };
 
 export default Icons;
