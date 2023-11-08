@@ -8,6 +8,7 @@ import HomeLanding from "../../components/home-landing";
 import { icons } from "../../constants";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import ScrollToTop from "../../components/ScrollToTop";
 
 export default function Home() {
   /* slider story */
@@ -63,6 +64,7 @@ export default function Home() {
         <title>Ruang Pertemanan</title>
       </Helmet>
       <div className="App w-full h-screen scroll-smooth">
+        <ScrollToTop />
         {/* navbar */}
         <section name="home-portofolio" className="App w-full h-screen">
           <NavRuangPertemanan />
@@ -535,8 +537,6 @@ export default function Home() {
           </div>
         </div>
 
-
-        
         {/* footer */}
         <section data-aos="fade-down" className="">
           <Footer />

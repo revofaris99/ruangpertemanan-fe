@@ -4,6 +4,7 @@ import Footer from "../../components/footer";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { images, icons } from "../../constants";
+import ScrollToTop from "../../components/ScrollToTop";
 export default function PuisiPage() {
   return (
     <Fragment>
@@ -12,6 +13,7 @@ export default function PuisiPage() {
         <title>Puisi</title>
       </Helmet>
       <div className="w-full h-screen">
+        <ScrollToTop/>
         {/* navbar */}
         <section>
           <Navbar />

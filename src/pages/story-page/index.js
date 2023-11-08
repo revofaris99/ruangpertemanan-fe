@@ -4,6 +4,7 @@ import Footer from "../../components/footer";
 import { Helmet } from "react-helmet";
 import { images, icons } from "../../constants";
 import { Link } from "react-router-dom";
+import ScrollToTop from "../../components/ScrollToTop";
 export default function StoryPage() {
   return (
     <Fragment>
@@ -12,6 +13,7 @@ export default function StoryPage() {
         <title>Story</title>
       </Helmet>
       <div className="w-full h-screen">
+        <ScrollToTop/>
         {/* navbar */}
         <section>
           <Navbar />

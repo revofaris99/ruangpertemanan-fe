@@ -20,6 +20,7 @@ import UserIcons from "../assets/images/user.png";
 import BGAuth from "../assets/images/bg-auth.svg";
 import BGFooter from "../assets/images/bg-footer.jpg";
 import HireWeb from "../assets/images/foto-hire.png";
+import BGReact from "../assets/images/react.svg";
 const Images = {
   Logo,
   AniqFto,
@@ -42,7 +43,8 @@ const Images = {
   UserIcons,
   BGAuth,
   BGFooter,
-  HireWeb
+  HireWeb,
+  BGReact,
 };
 
 export default Images;

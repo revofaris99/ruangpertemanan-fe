@@ -5,6 +5,7 @@ import NavRuangPertemanan from "../../components/navbar/ruangpertemanan";
 import Footer from "../../components/footer";
 import { images, icons } from "../../constants";
 import { Link } from "react-router-dom";
+import ScrollToTop from "../../components/ScrollToTop";
 
 export default function AboutPage() {
   
@@ -19,6 +20,7 @@ export default function AboutPage() {
         <title>About</title>
       </Helmet>
       <div name="" className="w-full h-screen">
+        <ScrollToTop/>
         {/* navbar */}
         <NavRuangPertemanan />
         {/* body */}
