@@ -1,11 +1,31 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import NavRuangPertemanan from "../../../components/navbar/ruangpertemanan";
+import { getPuisiId } from "../../../storages/actions/puisi";
 import Footer from "../../../components/footer";
-import { images } from "../../../constants";
-import { Link } from "react-router-dom";
+// import { images } from "../../../constants";
+import { Link, useParams } from "react-router-dom";
+import Moment from "moment";
+import Localization from "moment/locale/id";
 
 const DescribePuisi = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const {
+    data: detailPuisi
+  } = useSelector((state) => state.getPuisiId);
+
+  Moment.updateLocale("id", Localization);
+  const tanggal = Moment().locale("id");
+
+  const getDetailMenuById = () => {
+    dispatch(getPuisiId(id));
+  };
+
+  useEffect(() => {
+    getDetailMenuById();
+  },[]);
   return (
     <Fragment>
       <Helmet>
@@ -14,61 +34,61 @@ const DescribePuisi = () => {
       </Helmet>
       <div className="w-screen h-screen scroll-smooth">
         {/* section Navbar */}
-        <section>
+        <div>
           <NavRuangPertemanan />
-        </section>
+        </div>
         {/* end section Navbar */}
 
         {/* describe puisi */}
-        <section className="container px-4 lg:px-8 mx-auto max-w-screen-2xl mt-32">
+        <div className="container px-4 lg:px-8 mx-auto max-w-screen-2xl mt-32">
           {/* create name puisi */}
           <div className="border-b-2 border-blue-400">
             <div className="flex flex-row items-center justify-between">
               <div className="card border-blue-400 border rounded-lg p-2 flex flex-row items-center mb-2">
                 <div className="me-4">
                   <img
-                    src={images.AniqFto}
+                    src={detailPuisi?.photo_users}
                     alt=""
                     className="rounded-full w-12 h-12 shadow-md "
                   />
                 </div>
-                <h1>Revo Faris Saifuddin</h1>
+                <h1>{detailPuisi?.fullname}</h1>
               </div>
               <div className="text-center items-center">
                 <h1 className="font-bold">Post Puisi</h1>
-                <h1>10 Oktober 2000</h1>
+                <h1>{tanggal.format("LL")}</h1>
               </div>
             </div>
           </div>
+
           {/* puisi */}
           <div className="flex md:flex-cols-reverse flex-wrap mt-12">
             {/* isi puisi */}
             <div className="w-full md:w-4/6 p-4 text-gray-400 shadow-2xl">
-              <div className="text-center text-black font-bold text-2xl">
-                <h1>Beautiful Mountain View</h1>
-                <img
-                  src={images.AniqFto}
-                  alt="Mountain"
-                  className="mx-auto w-3/4 h-72 object-cover rounded-2xl shadow-gray-400 shadow-2xl hover:scale-110 duration-500 mt-12"
-                />
-              </div>
-              <div className="flex justify-center mt-10">
-                <div className="p-10 max-w-md text-center">
-                  <h5 className="">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                    elit. Nunc et ex at turpis rutrum viverra. Lorem ipsum dolor
-                    sit amet, consectetur adipiscing elit. Aliquam eu sapien
-                    porttitor, blandit velit ac, vehicula elit. Nunc et ex at
-                    turpis rutrum viverra.
-                  </h5>
-                  <cite class="block text-right mt-10 text-gray-400">
-                    <h1>10 Oktober 2000</h1>- Revo Faris Saifuddin
-                  </cite>
+              <div className="">
+                <div className="text-center text-black font-bold text-2xl">
+                  <h1>{detailPuisi?.title}</h1>
+                  <img
+                    src={detailPuisi?.photo_puisi}
+                    alt="Mountain"
+                    className="mx-auto w-3/4 h-72 object-cover rounded-2xl shadow-gray-400 shadow-2xl hover:scale-110 duration-500 mt-12"
+                  />
+                </div>
+                <div className="flex justify-center mt-10">
+                  <div className="p-10 max-w-md text-center">
+                    <h5 className="">
+                      {detailPuisi?.descriptions.split(/\r?\n/)}
+                    </h5>
+                    <cite class="block text-right mt-10 text-gray-400">
+                      <h1>{Moment(detailPuisi?.created_at).format("LL")}</h1>- {detailPuisi?.fullname}
+                    </cite>
+                  </div>
                 </div>
               </div>
             </div>
+
             {/* post lain */}
+
             <div className="w-full md:w-2/6 p-4 text-gray-400 rounded-r-lg shadow-2xl">
               <div className="text-start font-bold text-xl text-black mb-2">
                 <h1>last post</h1>
@@ -182,7 +202,7 @@ const DescribePuisi = () => {
               </div>
             </div>
           </div>
-        </section>
+        </div>
         {/* end section describe puisi */}
         {/* footer */}
         <Footer />

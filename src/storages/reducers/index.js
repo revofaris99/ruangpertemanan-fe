@@ -3,13 +3,19 @@ import loginReducer from "./loginReducers";
 import registerReducer from "./registerReducer";
 import user from "./userReducers";
 import getUserProfile from "./getUserProfile";
-import putUserProfileBio from "./putUserProfileBio"
+import putUserProfileBio from "./putUserProfileBio";
+import getPuisi from "./getPuisi";
+import getPuisiId from "./getPuisiId";
+import postPuisi from "./postPuisi";
 const rootReducers = combineReducers({
   user,
   loginReducer,
   registerReducer,
   getUserProfile,
-  putUserProfileBio
+  putUserProfileBio,
+  getPuisi,
+  getPuisiId,
+  postPuisi,
 });
 
 export default rootReducers;

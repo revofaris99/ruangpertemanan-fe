@@ -77,7 +77,7 @@ function App() {
             path="/ruang/v1/describe-article"
             element={<DescribeArticle />}
           />
-          <Route path="/ruang/v1/describe-puisi" element={<DescribePuisi />} />
+          <Route path="/ruang/v1/describe-puisi/:id" element={<DescribePuisi />} />
           <Route path="/ruang/v1/describe-story" element={<DescribeStory />} />
 
           <Route

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { addMenuPuisi } from "../../../storages/actions/menu";
+import { postPuisi } from "../../../storages/actions/puisi";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const FormInputPuisi = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
+  const [photo, setPhoto] = useState();
   const [inputData, setInputData] = useState({
     title: "",
     descriptions: "",
-    category_id: "2",
+    category_id: "1",
     photo: "",
   });
   const categories = [
@@ -18,41 +19,41 @@ const FormInputPuisi = () => {
     { id: 2, name: "story" },
     { id: 3, name: "article" },
   ];
-  const postData = async (e) => {
+
+  const postForm = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("title", inputData.title);
     formData.append("descriptions", inputData.descriptions);
     formData.append("category_id", inputData.category_id);
-    formData.append("photo", image);
-
-    dispatch(addMenuPuisi(formData,navigate));
+    formData.append("photo", photo);
+    console.log(formData);
+    dispatch(postPuisi(formData, navigate));
   };
 
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputData({ ...inputData, [name]: value });
+  const handleChange = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handlePhoto = (e) => {
+    setPhoto(e.target.files[0]);
+    console.log(e.target.files[0]);
   };
 
-  const onChangeImage = (e) => {
-    setImage(e.target.files[0]);
-    e.target.files[0] &&
-      setInputData({
-        ...inputData,
-        photo: URL.createObjectURL(e.target.files[0]),
-      });
-  };
   return (
     <div className="rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-4">
       <div className="flex flex-col gap-5.5 p-6.5">
-        <form onSubmit={postData}>
+        <form onSubmit={postForm}>
           <div className="">
             <label className="mb-3 block text-black font-semibold">Image</label>
             <div className="p-10 rounded-2xl">
               <input
                 type="file"
                 className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:focus:border-primary"
-                onChange={onChangeImage}
+                onChange={handlePhoto}
+                required
                 name="photo"
                 id="file"
               />
@@ -64,7 +65,8 @@ const FormInputPuisi = () => {
               type="text"
               name="title"
               value={inputData.title}
-              onChange={onChange}
+              required
+              onChange={handleChange}
               placeholder="Title Input"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
             />
@@ -76,7 +78,7 @@ const FormInputPuisi = () => {
             <textarea
               name="descriptions"
               value={inputData.descriptions}
-              onChange={onChange}
+              onChange={handleChange}
               rows={6}
               placeholder="Descriptions Puisi"
               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -92,7 +94,7 @@ const FormInputPuisi = () => {
                 className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                 name="category_id"
                 value={inputData.category_id}
-                onChange={onChange}
+                onChange={handleChange}
               >
                 {categories?.map((category, index) => (
                   <option key={index} value={category.id}>

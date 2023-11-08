@@ -1,16 +1,27 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useState, useEffect } from "react";
+import { getPuisi } from "../../storages/actions/puisi";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import NavRuangPertemanan from "../../components/navbar/ruangpertemanan";
-import Footer from "../../components/footer";
 import HomeLanding from "../../components/home-landing";
+import Footer from "../../components/footer";
 import { icons } from "../../constants";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import ScrollToTop from "../../components/ScrollToTop";
+import Moment from "moment";
+
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const getDataPuisi = useSelector((state) => state.getPuisi);
+
+  useEffect(() => {
+    dispatch(getPuisi());
+  }, [dispatch]);
+
   /* slider story */
   const slides = [
     {
@@ -57,6 +68,7 @@ export default function Home() {
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
+
   return (
     <Fragment>
       <Helmet>
@@ -142,23 +154,22 @@ export default function Home() {
             </p>
           </div>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-center items-center rounded-lg transition duration-500">
-            <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
+            {getDataPuisi.data?.map((item, index) =>(
+            <div key={index+1} className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full p-2 hover:shadow-blue-300">
                 <img
-                  src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
+                  src={item.photo_puisi}
                   alt="Mountain"
                   className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
                 />
                 <div className="p-6">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                    <Link to={"/ruang/v1/describe-puisi"}>
-                      Beautiful Mountain View
+                    <Link to={`/ruang/v1/describe-puisi/${item.id}`}>
+                      {item.title}
                     </Link>
                   </h2>
                   <p className="text-gray-700 leading-tight mb-4 truncate hover:text-clip">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                    elit. Nunc et ex at turpis rutrum viverra.
+                    {item.descriptions}
                   </p>
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
@@ -168,116 +179,14 @@ export default function Home() {
                         className="w-8 h-8 rounded-full mr-2 object-cover"
                       />
                       <span className="text-gray-800 font-semibold">
-                        John Doe
+                        {item.fullname}
                       </span>
                     </div>
-                    <span className="text-gray-600">10 oktober 1998</span>
+                    <span className="text-gray-600">{Moment(item.created_at).format("LL")}</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full p-2 hover:shadow-blue-300">
-                <img
-                  src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                  alt="Mountain"
-                  className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                />
-                <div className="p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                    <Link to={"/ruang/v1/describe-puisi"}>
-                      Beautiful Mountain View
-                    </Link>
-                  </h2>
-                  <p className="text-gray-700 leading-tight mb-4 truncate hover:text-clip">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                    elit. Nunc et ex at turpis rutrum viverra.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/32.jpg"
-                        alt="Avatar"
-                        className="w-8 h-8 rounded-full mr-2 object-cover"
-                      />
-                      <span className="text-gray-800 font-semibold">
-                        John Doe
-                      </span>
-                    </div>
-                    <span className="text-gray-600">10 oktober 1998</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full p-2 hover:shadow-blue-300">
-                <img
-                  src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                  alt="Mountain"
-                  className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                />
-                <div className="p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                    <Link to={"/ruang/v1/describe-puisi"}>
-                      Beautiful Mountain View
-                    </Link>
-                  </h2>
-                  <p className="text-gray-700 leading-tight mb-4 truncate hover:text-clip">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                    elit. Nunc et ex at turpis rutrum viverra.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/32.jpg"
-                        alt="Avatar"
-                        className="w-8 h-8 rounded-full mr-2 object-cover"
-                      />
-                      <span className="text-gray-800 font-semibold">
-                        John Doe
-                      </span>
-                    </div>
-                    <span className="text-gray-600">10 oktober 1998</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full p-2 hover:shadow-blue-300">
-                <img
-                  src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                  alt="Mountain"
-                  className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                />
-                <div className="p-6">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                    <Link to={"/ruang/v1/describe-puisi"}>
-                      Beautiful Mountain View
-                    </Link>
-                  </h2>
-                  <p className="text-gray-700 leading-tight mb-4 truncate hover:text-clip">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                    elit. Nunc et ex at turpis rutrum viverra.
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img
-                        src="https://randomuser.me/api/portraits/men/32.jpg"
-                        alt="Avatar"
-                        className="w-8 h-8 rounded-full mr-2 object-cover"
-                      />
-                      <span className="text-gray-800 font-semibold">
-                        John Doe
-                      </span>
-                    </div>
-                    <span className="text-gray-600">10 oktober 1998</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div>))}
           </div>
         </section>
         {/* card list story */}
