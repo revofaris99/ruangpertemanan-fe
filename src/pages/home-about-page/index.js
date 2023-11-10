@@ -55,7 +55,7 @@ export default function AboutPage() {
                   All-In-One{" "}
                   <span className="text-yellow-500">Ruang Pertemanan</span>
                 </h1>
-                <p className="leading-relaxed text-gray-500 text-xl italic font-semibold dark:text-white">
+                <p className="leading-relaxed text-gray-500 text-xl italic font-semibold dark:text-gray-500">
                   "Akan tiba saatnya nanti, air matamu akan jatuh bukan karena masalah,tetapi karena doamu telah Allah kabulkan" (KH. Maimoen Zubair)
                 </p>
               </div>

@@ -2,16 +2,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-
-export const postPuisi = (data,navigate) => async (dispatch) => {
+const token = localStorage.getItem("token");
+const headers = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+    Authorization: `Bearer ${token}`,
+  },
+};
+export const postPuisi = (data, navigate) => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
-    let headers = {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      },
-    };
     dispatch({ type: "POST_PUISI_PANDING" });
     const result = await axios.post(`${baseUrl}/puisi`, data, headers);
     dispatch({ type: "POST_PUISI_SUCCESS", payload: result.data });
@@ -46,6 +45,32 @@ export const getPuisiId = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({ payload: error.response.data, type: "GET_DETAIL_PUISI_FAILED" });
     console.log("getMenu error");
+    console.log(error);
+  }
+};
+export const getPuisiMyMenu = (navigate) => async (dispatch) => {
+  try {
+    if (!token) {
+      navigate("/auth/login");
+    }
+    dispatch({ type: "GET_MY_PUISI_PENDING" });
+    const result = await axios.get(`${baseUrl}puisi/my-menu`, headers);
+    dispatch({ type: "GET_MY_PUISI_SUCCESS", payload: result.data.data });
+  } catch (error) {
+    dispatch({ payload: error.response.data, type: "GET_MY_PUISI_FAILID" });
+    console.log(error);
+  }
+};
+export const deleteMyPuisi = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "DELETE_MY_PUISI_PENDING" });
+    const result = await axios.delete(
+      `${baseUrl}/puisi/my-menu/${id}`,
+      headers
+    );
+    dispatch({ type: "DELETE_MY_PUISI_SUCCESS", payload: result.data });
+  } catch (error) {
+    dispatch({ type: "DELETE_MY_PUISI_FAILID" });
     console.log(error);
   }
 };

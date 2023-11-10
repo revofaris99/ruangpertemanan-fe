@@ -7,6 +7,8 @@ import putUserProfileBio from "./putUserProfileBio";
 import getPuisi from "./getPuisi";
 import getPuisiId from "./getPuisiId";
 import postPuisi from "./postPuisi";
+import getPuisiMyMenu from "./getPuisiMyMenu";
+import deleteMyPuisi from "./deleteMypuisi";
 const rootReducers = combineReducers({
   user,
   loginReducer,
@@ -16,6 +18,8 @@ const rootReducers = combineReducers({
   getPuisi,
   getPuisiId,
   postPuisi,
+  getPuisiMyMenu,
+  deleteMyPuisi
 });
 
 export default rootReducers;

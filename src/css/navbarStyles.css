@@ -16,7 +16,7 @@
 }
 .navbar-logo{
     color:#222;
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 .nav-menu{
@@ -108,9 +108,6 @@ button:hover{
         background-color: #151516;
         transition: none;
         transition: 0.3s ease-in-out;
-    }
-    button{
-        /* display: none; */
     }
     .nav-links-mobile{
         display: block;

@@ -38,7 +38,6 @@ const DescribePuisi = () => {
           <NavRuangPertemanan />
         </div>
         {/* end section Navbar */}
-
         {/* describe puisi */}
         <div className="container px-4 lg:px-8 mx-auto max-w-screen-2xl mt-32">
           {/* create name puisi */}

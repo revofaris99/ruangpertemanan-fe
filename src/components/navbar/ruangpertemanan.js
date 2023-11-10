@@ -18,9 +18,9 @@ const NavRuangPertemanan = () => {
   return (
     <div className="">
       <nav className="NavbarItems">
-        <h2 className="navbar-logo animate-typing overflow-hidden whitespace-nowrap font-bold sm:text-lg">
+        <h1 className="navbar-logo overflow-hidden whitespace-nowrap font-bold sm:text-md">
           Ruang Pertemanan
-        </h2>
+        </h1>
         <div className="menu-icons" onClick={handleClick}>
           <i className={nav ? "fas fa-times" : "fas fa-bars"}></i>
         </div>

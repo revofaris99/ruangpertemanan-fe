@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { icons, images } from "../../../constants";
+import { icons } from "../../../constants";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfile } from "../../../storages/actions/users";
 import { useDispatch,useSelector } from "react-redux";
+import Icons from "../../../constants/icons";
 
 const CardProfileUser = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const CardProfileUser = () => {
           <img
             className="mx-auto rounded-full shadow-2xl h-36 w-36"
             src={item.photo}
-            alt="author avatar"
+            alt={Icons.PiImageSquareFill}
           />
           <div className="space-y-2">
             <div className="flex justify-center items-center flex-col space-y-3 text-lg font-medium leading-6">

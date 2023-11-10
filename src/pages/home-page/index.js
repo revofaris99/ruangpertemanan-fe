@@ -154,7 +154,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-center items-center rounded-lg transition duration-500">
-            {getDataPuisi.data?.map((item, index) =>(
+            {getDataPuisi.data?.slice(0,4).map((item, index) =>(
             <div key={index+1} className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full p-2 hover:shadow-blue-300">
                 <img
