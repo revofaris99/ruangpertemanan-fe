@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import ScrollToTop from "../../components/ScrollToTop";
 
 export default function AboutPage() {
-  
   /* scroll back top */
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -20,7 +19,7 @@ export default function AboutPage() {
         <title>About</title>
       </Helmet>
       <div name="" className="w-full h-screen">
-        <ScrollToTop/>
+        <ScrollToTop />
         {/* navbar */}
         <NavRuangPertemanan />
         {/* body */}
@@ -56,7 +55,9 @@ export default function AboutPage() {
                   <span className="text-yellow-500">Ruang Pertemanan</span>
                 </h1>
                 <p className="leading-relaxed text-gray-500 text-xl italic font-semibold dark:text-gray-500">
-                  "Akan tiba saatnya nanti, air matamu akan jatuh bukan karena masalah,tetapi karena doamu telah Allah kabulkan" (KH. Maimoen Zubair)
+                  "Akan tiba saatnya nanti, air matamu akan jatuh bukan karena
+                  masalah,tetapi karena doamu telah Allah kabulkan" (KH. Maimoen
+                  Zubair)
                 </p>
               </div>
               {/* intro end */}
@@ -130,6 +131,26 @@ export default function AboutPage() {
             </div>
           </section>
           {/* end section anggota ruang pertemanan */}
+
+          <section className="mt-10">
+            <div className="flex flex-col items-center w-1/3 mx-auto">
+              <div
+                className="relative h-0 overflow-hidden max-w-full w-full"
+                style={{paddingBottom: "56.25%"}}
+              >
+                <iframe
+                  width="600"
+                  height="315"
+                  src="https://www.youtube.com/embed/hCcWByXRENk?si=edkVcFAwAjwVJU4r&amp;clip=UgkxHHEBEwu-OkcgwjBEfmpeC3eH-k4lskuQ&amp;clipt=EAAYleIC"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  className="absolute top-0 left-0 w-full h-full rounded-2xl"
+                ></iframe>
+              </div>
+            </div>
+          </section>
 
           {/* <!-- section timeline ruang pertemanan --> */}
           <section className="text-center text-2xl p-4 mt-10">

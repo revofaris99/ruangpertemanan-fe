@@ -5,33 +5,99 @@ import CardProfileName from "../card-profile-name";
 import CardProfileUser from "../card-profile-user";
 import Footer from "../../../components/footer";
 import { icons } from "../../../constants";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPuisiMyMenu, deleteMyPuisi } from "../../../storages/actions/puisi";
+import {
+  getPuisiMyMenu,
+  getPuisiId,
+  putPuisiMyMenu,
+  deleteMyPuisi,
+} from "../../../storages/actions/puisi";
 import ModalEditPuisi from "../../puisi-page/edit-puisi/ModalEditPuisi";
 import Moment from "moment";
 import Swal from "sweetalert2";
 const WritePuisi = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [image, setImage] = useState(null);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const data = useSelector((state) => state.getPuisiMyMenu);
+  const { data: detailPuisi } = useSelector((state) => state.getPuisiId);
 
-  const [inputData, setInputData] = useState({
-    title: "",
-    descriptions: "",
-    category_id: "1",
-    photo: "",
-  });
+  const editPuisi = (id) => {
+    navigate(`/ruang/v1/profile-user/Mypuisi/${id}`);
+  };
+
   const categories = [
     { id: 1, name: "puisi" },
     { id: 2, name: "story" },
     { id: 3, name: "article" },
   ];
 
+  const [inputData, setInputData] = useState({
+    title: "",
+    descriptions: "",
+    category_id: "",
+    photo: "",
+  });
+
+  const postData = (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("title", inputData.title);
+    formData.append("descriptions", inputData.descriptions);
+    formData.append("category_id", inputData.category_id);
+
+    if (image) {
+      formData.append("photo", image);
+    } else if (inputData.photo) {
+      formData.append("photo", inputData.photo);
+    }
+    dispatch(putPuisiMyMenu(id,navigate,formData));
+  };
+
+  const onChange = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
+  const onChangeImage = (e) => {
+    setImage(e.target.files[0]);
+    if (e.target.files[0]) {
+      setInputData({
+        ...inputData,
+        photo: URL.createObjectURL(e.target.files[0]),
+      });
+    } else if (data && data.photo_puisi) {
+      setInputData({
+        ...inputData,
+        photo: data.photo_puisi,
+      });
+    }
+  };
+
+  const getDetailMenuById = () => {
+    dispatch(getPuisiId(id));
+  };
+
   useEffect(() => {
-    dispatch(getPuisiMyMenu(navigate));
+    getDetailMenuById();
   }, []);
+
+  useEffect(() => {
+    dispatch(getPuisiMyMenu());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (data) {
+      setInputData({
+        title: data.title || "",
+        descriptions: data.descriptions || "",
+        category_id: data.category_id || "",
+        photo: data.photo_puisi || "",
+      });
+    }
+  }, [data]);
 
   const handleDeletePuisi = (idPuisi, titlePuisi) => {
     Swal.fire({
@@ -108,7 +174,7 @@ const WritePuisi = () => {
                 </div>
                 <div className="mt-2">
                   <div className="mx-auto">
-                    {data.data?.map((item, index) => (
+                    { data.data?.map((item, index) => (
                       <div
                         key={index + 1}
                         className="flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start mt-4"
@@ -154,7 +220,9 @@ const WritePuisi = () => {
                             <div className="flex justify-between ms-10">
                               <button
                                 className="flex justify-between"
-                                onClick={() => setOpenModalEdit(true)}
+                                onClick={() =>
+                                  setOpenModalEdit(true) || editPuisi(item.id)
+                                }
                               >
                                 <icons.AiFillEdit size={20} color="blue" />
                                 <p className="ms-2 text-blue-600">Edit</p>
@@ -170,8 +238,9 @@ const WritePuisi = () => {
                                   </h3>
                                   <div className="overflow-y-auto h-[500px] rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-4">
                                     <div className="flex flex-col gap-5.5 p-6.5">
-                                      <form>
-                                        <div className="">
+                                      <form onSubmit={postData}>
+                                        <div className="bg-[image:var(--image-url)]"
+                                         style={{ "--image-url": `url(${detailPuisi?.photo_puisi})` }}>
                                           <label className="mb-3 block text-black font-semibold">
                                             Image
                                           </label>
@@ -179,10 +248,10 @@ const WritePuisi = () => {
                                             <input
                                               type="file"
                                               className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:focus:border-primary"
-                                              /* onChange={handlePhoto}
-                                              required */
-                                              name="photo"
-                                              id="file"
+                                              onChange={onChangeImage}
+                                              name="image"
+                                              id="photoUpload"
+                                              accept="image/*"
                                             />
                                           </div>
                                         </div>
@@ -193,10 +262,9 @@ const WritePuisi = () => {
                                           <input
                                             type="text"
                                             name="title"
-                                            /* value={inputData.title}
-                                            required
-                                            onChange={handleChange} */
-                                            placeholder="Title Input"
+                                            value={inputData.title||detailPuisi?.title}
+                                            onChange={onChange}
+                                            placeholder="title"
                                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                           />
                                         </div>
@@ -206,10 +274,10 @@ const WritePuisi = () => {
                                           </label>
                                           <textarea
                                             name="descriptions"
-                                            /* value={inputData.descriptions}
-                                            onChange={handleChange} */
+                                            value={inputData.descriptions||detailPuisi?.descriptions}
+                                            onChange={onChange}
                                             rows={6}
-                                            placeholder="Descriptions Puisi"
+                                            placeholder="Descriptions"
                                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                                           ></textarea>
                                         </div>
@@ -222,8 +290,8 @@ const WritePuisi = () => {
                                             <select
                                               className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-4 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input"
                                               name="category_id"
-                                              /* value={inputData.category_id}
-                                              onChange={handleChange} */
+                                              value={inputData.category_id}
+                                              onChange={onChange}
                                             >
                                               {categories?.map(
                                                 (category, index) => (

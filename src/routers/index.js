@@ -97,6 +97,14 @@ function App() {
             }
           />
           <Route
+            path="/ruang/v1/profile-user/Mypuisi/:id"
+            element={
+              <AuthChecker>
+                <WritePuisi />
+              </AuthChecker>
+            }
+          />
+          <Route
             path="/ruang/v1/profile-user/story"
             element={
               <AuthChecker>

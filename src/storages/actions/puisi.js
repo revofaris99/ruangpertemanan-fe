@@ -48,16 +48,45 @@ export const getPuisiId = (id) => async (dispatch) => {
     console.log(error);
   }
 };
-export const getPuisiMyMenu = (navigate) => async (dispatch) => {
-  try {
-    if (!token) {
-      navigate("/auth/login");
+export const getSearchSort = (search, page, limit) => async (dispatch) => {
+    try {
+      dispatch({ type: "GET_SEARCH_SORT_PUISI_PENDING" });
+      const result = await axios.get(
+        `${baseUrl}/puisi/sort-menu?search=${search}&page=${page}&limit=${limit}`
+      );
+      dispatch({
+        type: "GET_SEARCH_SORT_PUISI_SUCCESS",
+        payload: result.data.data,
+      });
+    } catch (error) {
+      console.log("error request get searhcsort", error);
+      dispatch({ type: "GET_SEARCH_SORT_PUISI_FAILED" });
     }
+  };
+
+export const getPuisiMyMenu = () => async (dispatch) => {
+  try {
     dispatch({ type: "GET_MY_PUISI_PENDING" });
-    const result = await axios.get(`${baseUrl}puisi/my-menu`, headers);
+    const result = await axios.get(`${baseUrl}/puisi/my-menu`, headers);
     dispatch({ type: "GET_MY_PUISI_SUCCESS", payload: result.data.data });
   } catch (error) {
-    dispatch({ payload: error.response.data, type: "GET_MY_PUISI_FAILID" });
+    dispatch({ payload: error.response.data, type: "GET_MY_PUISI_FAILED" });
+    console.log(error);
+  }
+};
+
+export const putPuisiMyMenu = (id,navigate,data) => async (dispatch) => {
+  try {
+    dispatch({ type: "UPDATE_MY_PUISI_PENDING" });
+    const result = await axios.put(
+      `${baseUrl}/puisi/my-menu/${id}`,
+      data,
+      headers
+    );
+    dispatch({ type: "UPDATE_MY_PUISI_SUCCESS", payload: result.data });
+    navigate("/ruang/v1/profile-user/puisi");
+  } catch (error) {
+    dispatch({ payload: error.response.data, type: "UPDATE_MY_PUISI_FAILED" });
     console.log(error);
   }
 };
@@ -70,7 +99,7 @@ export const deleteMyPuisi = (id) => async (dispatch) => {
     );
     dispatch({ type: "DELETE_MY_PUISI_SUCCESS", payload: result.data });
   } catch (error) {
-    dispatch({ type: "DELETE_MY_PUISI_FAILID" });
+    dispatch({ type: "DELETE_MY_PUISI_FAILED" });
     console.log(error);
   }
 };

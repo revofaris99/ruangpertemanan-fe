@@ -7,6 +7,7 @@ import FormInputProfile from "../form-input-profile";
 import Footer from "../../../components/footer";
 
 const UserProfile = () => {
+  
   return (
     <Fragment>
       <Helmet>

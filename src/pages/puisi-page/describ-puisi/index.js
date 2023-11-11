@@ -2,22 +2,22 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import NavRuangPertemanan from "../../../components/navbar/ruangpertemanan";
-import { getPuisiId } from "../../../storages/actions/puisi";
+import { getPuisiId, getPuisi } from "../../../storages/actions/puisi";
 import Footer from "../../../components/footer";
 // import { images } from "../../../constants";
 import { Link, useParams } from "react-router-dom";
 import Moment from "moment";
 import Localization from "moment/locale/id";
+import { icons } from "../../../constants";
 
 const DescribePuisi = () => {
-  const { id } = useParams();
   const dispatch = useDispatch();
-  const {
-    data: detailPuisi
-  } = useSelector((state) => state.getPuisiId);
-
+  const { id } = useParams();
   Moment.updateLocale("id", Localization);
   const tanggal = Moment().locale("id");
+
+  const { data: detailPuisi } = useSelector((state) => state.getPuisiId);
+  const dataPuisi = useSelector((state) => state.getPuisi);
 
   const getDetailMenuById = () => {
     dispatch(getPuisiId(id));
@@ -25,7 +25,11 @@ const DescribePuisi = () => {
 
   useEffect(() => {
     getDetailMenuById();
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    getPuisi();
+  }, []);
   return (
     <Fragment>
       <Helmet>
@@ -79,7 +83,8 @@ const DescribePuisi = () => {
                       {detailPuisi?.descriptions.split(/\r?\n/)}
                     </h5>
                     <cite class="block text-right mt-10 text-gray-400">
-                      <h1>{Moment(detailPuisi?.created_at).format("LL")}</h1>- {detailPuisi?.fullname}
+                      <h1>{Moment(detailPuisi?.created_at).format("LL")}</h1>-{" "}
+                      {detailPuisi?.fullname}
                     </cite>
                   </div>
                 </div>
@@ -93,111 +98,41 @@ const DescribePuisi = () => {
                 <h1>last post</h1>
               </div>
               <div className="">
-                <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-2 hover:shadow-blue-300">
-                    {/* <img
-                      src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                      alt="Mountain"
-                      className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                    /> */}
-                    <div className="p-6">
-                      <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                        <Link to={"/ruang/v1/describe-puisi"}>
-                          Beautiful Mountain View
-                        </Link>
-                      </h2>
-                      <p className="text-gray-700 leading-tight mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                        elit. Nunc et ex at turpis rutrum viverra.
-                      </p>
-                      <p className="mb-2"># Puisi</p>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <img
-                            src="https://randomuser.me/api/portraits/men/32.jpg"
-                            alt="Avatar"
-                            className="w-8 h-8 rounded-full mr-2 object-cover"
-                          />
-                          <span className="text-gray-800 font-semibold">
-                            John Doe
-                          </span>
+                {dataPuisi.data?.slice(0,3).map((item, index) => (
+                  <div key={index+1} className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
+                    <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-2 hover:shadow-blue-300">
+                      <img
+                        src={item.photo_puisi}
+                        alt="Mountain"
+                        className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
+                      />
+                      <div className="p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                          <Link to={"/ruang/v1/describe-puisi"}>
+                            {item.title}
+                          </Link>
+                        </h2>
+                        <p className="text-gray-700 leading-tight mb-4">
+                          {item.descriptions}
+                        </p>
+                        <p className="mb-2"># {item.category}</p>
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center">
+                            <img
+                              src={item.photo_users}
+                              alt={icons.PiImageSquareFill}
+                              className="w-8 h-8 rounded-full mr-2 object-cover"
+                            />
+                            <span className="text-gray-800 font-semibold">
+                              {item.fullname}
+                            </span>
+                          </div>
+                          <span className="text-gray-600">{Moment(item.created_at).format("LL")}</span>
                         </div>
-                        <span className="text-gray-600">10 oktober 1998</span>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-2 hover:shadow-blue-300">
-                    {/* <img
-                      src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                      alt="Mountain"
-                      className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                    /> */}
-                    <div className="p-6">
-                      <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                        <Link to={"/ruang/v1/describe-puisi"}>
-                          Beautiful Mountain View
-                        </Link>
-                      </h2>
-                      <p className="text-gray-700 leading-tight mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                        elit. Nunc et ex at turpis rutrum viverra.
-                      </p>
-                      <p className="mb-2"># Puisi</p>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <img
-                            src="https://randomuser.me/api/portraits/men/32.jpg"
-                            alt="Avatar"
-                            className="w-8 h-8 rounded-full mr-2 object-cover"
-                          />
-                          <span className="text-gray-800 font-semibold">
-                            John Doe
-                          </span>
-                        </div>
-                        <span className="text-gray-600">10 oktober 1998</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
-                  <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-2 hover:shadow-blue-300">
-                    {/* <img
-                      src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606"
-                      alt="Mountain"
-                      className="w-full h-64 object-cover rounded-lg hover:scale-110 duration-500"
-                    /> */}
-                    <div className="p-6">
-                      <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                        <Link to={"/ruang/v1/describe-puisi"}>
-                          Beautiful Mountain View
-                        </Link>
-                      </h2>
-                      <p className="text-gray-700 leading-tight mb-4">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Aliquam eu sapien porttitor, blandit velit ac, vehicula
-                        elit. Nunc et ex at turpis rutrum viverra.
-                      </p>
-                      <p className="mb-2"># Puisi</p>
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center">
-                          <img
-                            src="https://randomuser.me/api/portraits/men/32.jpg"
-                            alt="Avatar"
-                            className="w-8 h-8 rounded-full mr-2 object-cover"
-                          />
-                          <span className="text-gray-800 font-semibold">
-                            John Doe
-                          </span>
-                        </div>
-                        <span className="text-gray-600">10 oktober 1998</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

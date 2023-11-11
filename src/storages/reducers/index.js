@@ -8,7 +8,9 @@ import getPuisi from "./getPuisi";
 import getPuisiId from "./getPuisiId";
 import postPuisi from "./postPuisi";
 import getPuisiMyMenu from "./getPuisiMyMenu";
+import getSearchSort from "./getSearchSort";
 import deleteMyPuisi from "./deleteMypuisi";
+import putPuisiMyMenu from "./putPuisiMyMenu";
 const rootReducers = combineReducers({
   user,
   loginReducer,
@@ -19,7 +21,9 @@ const rootReducers = combineReducers({
   getPuisiId,
   postPuisi,
   getPuisiMyMenu,
-  deleteMyPuisi
+  getSearchSort,
+  deleteMyPuisi,
+  putPuisiMyMenu,
 });
 
 export default rootReducers;

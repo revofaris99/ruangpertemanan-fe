@@ -165,7 +165,7 @@ export default function Home() {
                 <div className="p-6">
                   <h2 className="text-2xl font-bold text-gray-800 mb-2">
                     <Link to={`/ruang/v1/describe-puisi/${item.id}`}>
-                      {item.title}
+                      {item.title.slice(0,10)}...
                     </Link>
                   </h2>
                   <p className="text-gray-700 leading-tight mb-4 truncate hover:text-clip">
@@ -174,8 +174,8 @@ export default function Home() {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <img
-                        src="https://randomuser.me/api/portraits/men/32.jpg"
-                        alt="Avatar"
+                        src={item.photo_users ? item.photo_users : <icons.FaUserAlt color="black" size={20}/>}
+                        alt={icons.FaUserAlt}
                         className="w-8 h-8 rounded-full mr-2 object-cover"
                       />
                       <span className="text-gray-800 font-semibold">
