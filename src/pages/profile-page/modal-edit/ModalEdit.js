@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalEditPuisi = ({isVisible, onClose, children}) => {
+const ModalEdit = ({isVisible, onClose, children}) => {
   if(!isVisible) return null
 
   const handleClose=(e)=>{
@@ -19,4 +19,4 @@ const ModalEditPuisi = ({isVisible, onClose, children}) => {
   );
 };
 
-export default ModalEditPuisi;
+export default ModalEdit;

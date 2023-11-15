@@ -1,4 +1,4 @@
-import React, { Fragment,useState,useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { images, icons } from "../../constants";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -11,7 +11,7 @@ import Moment from "moment";
 
 export default function PuisiPage() {
   const dispatch = useDispatch();
-  const {data}  = useSelector((state) => state.getSearchSort);
+  const { data } = useSelector((state) => state.getSearchSort);
 
   const [page, setPage] = useState(1);
   const [limit] = useState(8);
@@ -40,6 +40,7 @@ export default function PuisiPage() {
   useEffect(() => {
     console.log(`${page}${limit}`);
     getData();
+    // eslint-disable-next-line
   }, [page, limit]);
 
   return (
@@ -113,7 +114,10 @@ export default function PuisiPage() {
           </div>
           <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 justify-center items-center rounded-lg transition duration-500">
             {data?.rows?.map((item, index) => (
-              <div key={index+1} className="p-2 rounded-lg shadow-2xl shadow-blue-500/20">
+              <div
+                key={index + 1}
+                className="p-2 rounded-lg shadow-2xl shadow-blue-500/20"
+              >
                 <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-lg w-full p-2 hover:shadow-blue-300">
                   <img
                     src={item.photo_puisi}
@@ -123,7 +127,7 @@ export default function PuisiPage() {
                   <div className="p-6">
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">
                       <Link to={`/ruang/v1/describe-puisi/${item.id}`}>
-                        {item.title.slice(0,10)}...
+                        {item.title.slice(0, 10)}...
                       </Link>
                     </h2>
                     <p className="text-gray-700 leading-tight mb-4">
@@ -132,7 +136,13 @@ export default function PuisiPage() {
                     <div className="flex justify-between items-center">
                       <div className="flex items-center">
                         <img
-                          src={item.photo_users ? item.photo_users : <icons.FaUserAlt color="black" size={20}/>}
+                          src={
+                            item.photo_users ? (
+                              item.photo_users
+                            ) : (
+                              <icons.FaUserAlt color="black" size={20} />
+                            )
+                          }
                           alt={icons.FaUserAlt}
                           className="w-8 h-8 rounded-full mr-2 object-cover"
                         />
@@ -140,7 +150,9 @@ export default function PuisiPage() {
                           {item.fullname}
                         </span>
                       </div>
-                      <span className="text-gray-600">{Moment(item.created_at).format("LL")}</span>
+                      <span className="text-gray-600">
+                        {Moment(item.created_at).format("LL")}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -151,12 +163,14 @@ export default function PuisiPage() {
         <section>
           <div className="my-5 text-center font-bold">
             <div>
-              <button
-                className="rounded p-2 button-custom text-white border-0 bg-blue-600 me-3 font-bold"
-                onClick={() => goToPage(page - 1)}
-              >
-                Prev
-              </button>
+              {page > 1 && (
+                <button
+                  className="rounded p-2 button-custom text-white border-0 bg-blue-600 me-3 font-bold"
+                  onClick={() => goToPage(page - 1)}
+                >
+                  Prev
+                </button>
+              )}
               {data?.pages?.pageNow} From {data?.pages?.totalPage}
               <button
                 className="rounded p-2 button-custom text-white border-0 bg-blue-600 ms-3 font-bold"

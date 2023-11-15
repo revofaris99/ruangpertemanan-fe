@@ -31,7 +31,6 @@ export const getPuisi = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "GET_PUISI_FAILED",
-      payload: error.response.data.message,
     });
     console.log("getMenu error");
     console.log(error);
@@ -43,7 +42,7 @@ export const getPuisiId = (id) => async (dispatch) => {
     const result = await axios.get(`${baseUrl}/puisi/menu/${id}`);
     dispatch({ type: "GET_DETAIL_PUISI_SUCCESS", payload: result.data.data });
   } catch (error) {
-    dispatch({ payload: error.response.data, type: "GET_DETAIL_PUISI_FAILED" });
+    dispatch({type: "GET_DETAIL_PUISI_FAILED" });
     console.log("getMenu error");
     console.log(error);
   }
@@ -70,24 +69,26 @@ export const getPuisiMyMenu = () => async (dispatch) => {
     const result = await axios.get(`${baseUrl}/puisi/my-menu`, headers);
     dispatch({ type: "GET_MY_PUISI_SUCCESS", payload: result.data.data });
   } catch (error) {
-    dispatch({ payload: error.response.data, type: "GET_MY_PUISI_FAILED" });
+    dispatch({ type: "GET_MY_PUISI_FAILED" });
     console.log(error);
   }
 };
 
-export const putPuisiMyMenu = (id,navigate,data) => async (dispatch) => {
+export const putPuisiMyMenu = (id, data) => async (dispatch) => {
   try {
     dispatch({ type: "UPDATE_MY_PUISI_PENDING" });
-    const result = await axios.put(
+    const response = await axios.put(
       `${baseUrl}/puisi/my-menu/${id}`,
       data,
       headers
     );
-    dispatch({ type: "UPDATE_MY_PUISI_SUCCESS", payload: result.data });
-    navigate("/ruang/v1/profile-user/puisi");
+    const result = response.data
+    dispatch({ type: "UPDATE_MY_PUISI_SUCCESS", payload: result });
+    toast.success("Update Puisi Successfuly!");
   } catch (error) {
     dispatch({ payload: error.response.data, type: "UPDATE_MY_PUISI_FAILED" });
     console.log(error);
+    toast.error("Update Puisi Failed!");
   }
 };
 export const deleteMyPuisi = (id) => async (dispatch) => {

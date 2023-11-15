@@ -25,7 +25,7 @@ const UserProfile = () => {
         <section className="container px-4 lg:px-8 mx-auto max-w-screen-2xl mt-32">
           {/* tgl and name userprofile */}
           <div className="border-b-2 border-blue-400">
-            <CardProfileName />
+            <CardProfileName/>
           </div>
           {/* container profile */}
           <div className="flex md:flex-cols-reverse flex-wrap mt-12">

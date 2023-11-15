@@ -13,7 +13,7 @@ import {
   putPuisiMyMenu,
   deleteMyPuisi,
 } from "../../../storages/actions/puisi";
-import ModalEditPuisi from "../../puisi-page/edit-puisi/ModalEditPuisi";
+import ModalEdit from "../../profile-page/modal-edit/ModalEdit";
 import Moment from "moment";
 import Swal from "sweetalert2";
 const WritePuisi = () => {
@@ -28,7 +28,7 @@ const WritePuisi = () => {
   const editPuisi = (id) => {
     navigate(`/ruang/v1/profile-user/Mypuisi/${id}`);
   };
-
+  const reload = () => window.location.reload();
   const categories = [
     { id: 1, name: "puisi" },
     { id: 2, name: "story" },
@@ -54,7 +54,9 @@ const WritePuisi = () => {
     } else if (inputData.photo) {
       formData.append("photo", inputData.photo);
     }
-    dispatch(putPuisiMyMenu(id,navigate,formData));
+    
+    // Swal
+    dispatch(putPuisiMyMenu(id, formData));
   };
 
   const onChange = (e) => {
@@ -76,13 +78,9 @@ const WritePuisi = () => {
     }
   };
 
-  const getDetailMenuById = () => {
-    dispatch(getPuisiId(id));
-  };
-
   useEffect(() => {
-    getDetailMenuById();
-  }, []);
+    dispatch(getPuisiId(id));
+  }, [dispatch, id]);
 
   useEffect(() => {
     dispatch(getPuisiMyMenu());
@@ -174,7 +172,7 @@ const WritePuisi = () => {
                 </div>
                 <div className="mt-2">
                   <div className="mx-auto">
-                    { data.data?.map((item, index) => (
+                    {data.data?.map((item, index) => (
                       <div
                         key={index + 1}
                         className="flex gap-3 bg-white border border-gray-300 rounded-xl overflow-hidden items-center justify-start mt-4"
@@ -193,14 +191,14 @@ const WritePuisi = () => {
                             </Link>
                           </p>
 
-                          <p className="text-gray-500">
-                            {item.descriptions.slice(0, 200)}
+                          <p className="text-gray-500 break-normal md:break-all">
+                            {item.descriptions.slice(0, 255)}
                           </p>
                           <p className="mb-2 text-gray-500">
                             # {item.category}
                           </p>
-                          <span className="flex items-center justify-start text-gray-500">
-                            <div className="flex justify-between items-center">
+                          <div className="flex items-center justify-start text-gray-500">
+                            <div className="flex md:flex-cols-reverse flex-wrap">
                               <div className="flex items-center">
                                 <img
                                   src={item.photo_users}
@@ -215,8 +213,8 @@ const WritePuisi = () => {
                                 {Moment(item.created_at).format("LL")}
                               </span>
                             </div>
-                          </span>
-                          <div className="w-20 flex justify-between mt-4">
+                          </div>
+                          <div className="flex md:flex-cols-reverse flex-wrap mt-4">
                             <div className="flex justify-between ms-10">
                               <button
                                 className="flex justify-between"
@@ -228,9 +226,9 @@ const WritePuisi = () => {
                                 <p className="ms-2 text-blue-600">Edit</p>
                               </button>
                               {/* modal edit menu */}
-                              <ModalEditPuisi
+                              <ModalEdit
                                 isVisible={openModalEdit}
-                                onClose={() => setOpenModalEdit(false)}
+                                onClose={() => setOpenModalEdit(false)||setOpenModalEdit(reload)}
                               >
                                 <div className="p-6 h-[600px]">
                                   <h3 className="text-xl font-semibold text-gray-900 mb-5">
@@ -239,8 +237,12 @@ const WritePuisi = () => {
                                   <div className="overflow-y-auto h-[500px] rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-4">
                                     <div className="flex flex-col gap-5.5 p-6.5">
                                       <form onSubmit={postData}>
-                                        <div className="bg-[image:var(--image-url)]"
-                                         style={{ "--image-url": `url(${detailPuisi?.photo_puisi})` }}>
+                                        <div
+                                          className="bg-[image:var(--image-url)]"
+                                          style={{
+                                            "--image-url": `url(${detailPuisi?.photo_puisi})`,
+                                          }}
+                                        >
                                           <label className="mb-3 block text-black font-semibold">
                                             Image
                                           </label>
@@ -262,7 +264,10 @@ const WritePuisi = () => {
                                           <input
                                             type="text"
                                             name="title"
-                                            value={inputData.title||detailPuisi?.title}
+                                            value={
+                                              inputData.title ||
+                                              detailPuisi?.title
+                                            }
                                             onChange={onChange}
                                             placeholder="title"
                                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -274,7 +279,10 @@ const WritePuisi = () => {
                                           </label>
                                           <textarea
                                             name="descriptions"
-                                            value={inputData.descriptions||detailPuisi?.descriptions}
+                                            value={
+                                              inputData.descriptions ||
+                                              detailPuisi?.descriptions
+                                            }
                                             onChange={onChange}
                                             rows={6}
                                             placeholder="Descriptions"
@@ -337,7 +345,7 @@ const WritePuisi = () => {
                                     </div>
                                   </div>
                                 </div>
-                              </ModalEditPuisi>
+                              </ModalEdit>
                             </div>
                             {/* button delete */}
                             <div className="flex justify-between ms-10">

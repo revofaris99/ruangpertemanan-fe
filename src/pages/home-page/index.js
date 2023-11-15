@@ -18,10 +18,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const getDataPuisi = useSelector((state) => state.getPuisi);
 
-  useEffect(() => {
-    dispatch(getPuisi());
-  }, [dispatch]);
-
   /* slider story */
   const slides = [
     {
@@ -41,6 +37,7 @@ export default function Home() {
       url: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2671&q=80",
     },
   ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {
@@ -68,6 +65,10 @@ export default function Home() {
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
+
+  useEffect(() => {
+    dispatch(getPuisi());
+  }, [dispatch]);
 
   return (
     <Fragment>
@@ -437,6 +438,7 @@ export default function Home() {
             </ul>
           </div>
         </section>
+        
         <div className="container px-2 lg:px-8 mx-auto max-w-screen-2xl mt-32">
           <div onClick={scrollToTop} className="flex flex-row-reverse">
             <icons.AiOutlineArrowUp

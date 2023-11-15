@@ -21,7 +21,7 @@ import WritePuisi from "../pages/profile-page/show-puisi";
 import WriteArticle from "../pages/profile-page/show-article";
 import WriteStory from "../pages/profile-page/show-story";
 import AddPuisi from "../pages/profile-page/input-puisi";
-import Test from "../App"
+import Test from "../App";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -77,11 +77,22 @@ function App() {
             path="/ruang/v1/describe-article"
             element={<DescribeArticle />}
           />
-          <Route path="/ruang/v1/describe-puisi/:id" element={<DescribePuisi />} />
+          <Route
+            path="/ruang/v1/describe-puisi/:id"
+            element={<DescribePuisi />}
+          />
           <Route path="/ruang/v1/describe-story" element={<DescribeStory />} />
 
           <Route
             path="/ruang/v1/profile-user"
+            element={
+              <AuthChecker>
+                <ProfilePage />
+              </AuthChecker>
+            }
+          />
+          <Route
+            path="/ruang/v1/profile-user/update-photo/:id"
             element={
               <AuthChecker>
                 <ProfilePage />
@@ -129,7 +140,7 @@ function App() {
               </AuthChecker>
             }
           />
-          <Route path="test" elemet={<Test/>}/>
+          <Route path="test" elemet={<Test />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

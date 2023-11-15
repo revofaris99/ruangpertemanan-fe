@@ -11,7 +11,6 @@ const FormInputProfile = () => {
   
   const emailUser = localStorage.getItem("email");
   const [inputData, setInputData] = useState({
-    email:data.email||"",
     fullname: data.fullname||"",
     phone: "",
     city: "",
@@ -22,7 +21,6 @@ const FormInputProfile = () => {
   const postData = (e) => {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("email", inputData.email);
     formData.append("fullname", inputData.fullname);
     formData.append("phone", inputData.phone);
     formData.append("city", inputData.city);
@@ -40,7 +38,7 @@ const FormInputProfile = () => {
     dispatch(getUserProfile());
   }, [dispatch]);
 
-   useEffect(() => {
+  /*  useEffect(() => {
     if (data) {
       setInputData(
         {
@@ -53,7 +51,7 @@ const FormInputProfile = () => {
         [data]
       );
     }
-  });
+  }); */
   return (
     <div className="rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-4">
       {/* list  */}
@@ -93,8 +91,8 @@ const FormInputProfile = () => {
                           id="email"
                           name="email"
                           type="email"
-                          value={inputData.email}
-                          defaultValue={item.email}
+                          value={emailUser ? emailUser : "email"}
+                          placeholder="Email address"
                           style={{ borderColor: "#D2C2FF" }}
                         />
                         <h1 className="mt-5">Phone Number</h1>
@@ -102,7 +100,8 @@ const FormInputProfile = () => {
                           type="text"
                           name="phone"
                           value={inputData.phone}
-                          defaultValue={item.phone}
+                          onChange={onChange}
+                          placeholder={item.phone}
                           className="peer placeholder:text-black h-10 w-full border-b-2 border-500 text-gray-900 focus:outline-none focus:borer-rose-600 rounded-lg"
                           style={{ borderColor: "#D2C2FF" }}
                         />
@@ -151,7 +150,7 @@ const FormInputProfile = () => {
                       </div>
                       <div className="flex justify-end mx-auto me-5">
                         <button
-                          type="submit"
+                          // type="submit"
                           className="w-32 font-semibold hover:text-white py-2 px-4 border rounded"
                           style={{
                             backgroundColor: "#2395FF",

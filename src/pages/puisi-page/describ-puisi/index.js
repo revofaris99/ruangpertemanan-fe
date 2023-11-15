@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet";
 import NavRuangPertemanan from "../../../components/navbar/ruangpertemanan";
 import { getPuisiId, getPuisi } from "../../../storages/actions/puisi";
 import Footer from "../../../components/footer";
-// import { images } from "../../../constants";
 import { Link, useParams } from "react-router-dom";
 import Moment from "moment";
 import Localization from "moment/locale/id";
@@ -19,17 +18,12 @@ const DescribePuisi = () => {
   const { data: detailPuisi } = useSelector((state) => state.getPuisiId);
   const dataPuisi = useSelector((state) => state.getPuisi);
 
-  const getDetailMenuById = () => {
+  useEffect(() => {
     dispatch(getPuisiId(id));
-  };
-
-  useEffect(() => {
-    getDetailMenuById();
-  }, []);
-
-  useEffect(() => {
-    getPuisi();
-  }, []);
+  }, [dispatch,id]);
+  useEffect(()=>{
+    dispatch(getPuisi())
+  },[dispatch])
   return (
     <Fragment>
       <Helmet>
@@ -70,7 +64,7 @@ const DescribePuisi = () => {
             <div className="w-full md:w-4/6 p-4 text-gray-400 shadow-2xl">
               <div className="">
                 <div className="text-center text-black font-bold text-2xl">
-                  <h1>{detailPuisi?.title}</h1>
+                  <h1 className="break-normal md:break-all">{detailPuisi?.title}</h1>
                   <img
                     src={detailPuisi?.photo_puisi}
                     alt="Mountain"
@@ -78,9 +72,9 @@ const DescribePuisi = () => {
                   />
                 </div>
                 <div className="flex justify-center mt-10">
-                  <div className="p-10 max-w-md text-center">
-                    <h5 className="">
-                      {detailPuisi?.descriptions.split(/\r?\n/)}
+                  <div className="p-10 max-w-md break-normal hover:break-all">
+                    <h5 className="break-normal md:break-all">
+                      {detailPuisi?.descriptions}
                     </h5>
                     <cite class="block text-right mt-10 text-gray-400">
                       <h1>{Moment(detailPuisi?.created_at).format("LL")}</h1>-{" "}
@@ -108,7 +102,7 @@ const DescribePuisi = () => {
                       />
                       <div className="p-6">
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                          <Link to={"/ruang/v1/describe-puisi"}>
+                          <Link to={`/ruang/v1/describe-puisi/${item.id}`}>
                             {item.title}
                           </Link>
                         </h2>

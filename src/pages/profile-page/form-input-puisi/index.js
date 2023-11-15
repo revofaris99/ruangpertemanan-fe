@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 const FormInputPuisi = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const {postData} = useSelector((state) => state.postPuisi);
   const [photo, setPhoto] = useState();
   const [inputData, setInputData] = useState({
     title: "",
