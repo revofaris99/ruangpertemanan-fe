@@ -1,0 +1,10 @@
+.scroller{
+    max-width: 600px;
+}
+
+.scroller__inner{
+    padding-block: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
